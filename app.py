@@ -548,4 +548,4 @@ if st.session_state.user_role in ['admin', 'DM']:
         st.markdown("### 🗺️ ADS Monitor")
         st.info("💡 ADS 모니터링 관련 현황 화면입니다.")
     with tbs[4]:
-        am.draw_admin_tab(clean_df, f_drive, u_df, sched_df, m_cars, m_drivers, kst_now, "")
+        am.draw_admin_tab(clean_df, f_drive, u_df, sched_df, m_cars, m_drivers, kst_now)
