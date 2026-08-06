@@ -21,7 +21,6 @@ import admin_utils as utils
 import summary_modules.tab_summary as tab_summary
 import tab_safeguard
 import tab_vehicle
-import sheet_manager as sm
 
 st.set_page_config(layout="wide", page_title="운영 대시보드", page_icon="🚖")
 
