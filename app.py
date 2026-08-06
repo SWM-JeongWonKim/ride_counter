@@ -538,7 +538,7 @@ with tbs[2]:
     
 if st.session_state.user_role in ['admin', 'DM']:
     with tbs[3]:
-        # 🗺️ ADS Monitor (원본 100% 깔끔 핏)
+        # 🗺️ ADS Monitor (두 번째 이미지와 1:1 완벽 일치 정밀 크롭)
         ads_url = "https://adtc.swm.ai/adsmonitor/#/map"
         
         components.html(f"""
@@ -558,15 +558,16 @@ if st.session_state.user_role in ['admin', 'DM']:
                 </div>
             </div>
             
-            <div style="width: 100%; height: 570px; overflow: hidden; border-radius: 12px; border: 1px solid #1e293b; position: relative;">
+            <!-- 두 번째 이미지와 동일한 지도 전면 뷰포트 (메뉴/하단 완전 제거) -->
+            <div style="width: 100%; height: 520px; overflow: hidden; border-radius: 12px; border: 1px solid #1e293b; background-color: #0b132b; position: relative;">
                 <iframe id="ads_frame" 
                         src="{ads_url}" 
-                        style="width: 100%; height: 850px; border: none; position: absolute; top: 0; left: 0;"
+                        style="width: 123%; height: 950px; border: none; position: absolute; top: -122px; left: -212px;"
                         allow="fullscreen; geolocation; accelerometer; gyroscope; magnetometer; VR; XR; webgl"
                         sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-pointer-lock">
                 </iframe>
             </div>
-        """, height=630)
+        """, height=580)
         
     with tbs[4]:
         am.draw_admin_tab(clean_df, f_drive, u_df, sched_df, m_cars, m_drivers, kst_now)
