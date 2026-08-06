@@ -1,0 +1,9 @@
+streamlit
+pandas
+firebase-admin
+plotly
+xlsxwriter
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
+holidays
