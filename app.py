@@ -538,7 +538,7 @@ with tbs[2]:
     
 if st.session_state.user_role in ['admin', 'DM']:
     with tbs[3]:
-        # 🗺️ ADS Monitor (좌측 여백 완벽 제거: left: -275px, width: 131%)
+        # 🗺️ ADS Monitor (좌측 여백 완전 제거: left: -288px, width: 138% - 오른쪽 실시간 버튼 완벽 노출)
         ads_url = "https://adtc.swm.ai/adsmonitor/#/map"
         
         components.html(f"""
@@ -558,11 +558,11 @@ if st.session_state.user_role in ['admin', 'DM']:
                 </div>
             </div>
             
-            <!-- left: -275px, width: 131% 밀착 보정 -->
+            <!-- left: -288px (좌측 여백 밀착), width: 138% (우측 실시간 버튼 노출) -->
             <div style="width: 100%; height: 540px; overflow: hidden; border-radius: 12px; border: 1px solid #1e293b; background-color: #0b132b; position: relative;">
                 <iframe id="ads_frame" 
                         src="{ads_url}" 
-                        style="width: 131%; height: 950px; border: none; position: absolute; top: -110px; left: -275px;"
+                        style="width: 138%; height: 950px; border: none; position: absolute; top: -110px; left: -288px;"
                         allow="fullscreen; geolocation; accelerometer; gyroscope; magnetometer; VR; XR; webgl"
                         sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-pointer-lock">
                 </iframe>
