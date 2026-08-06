@@ -538,7 +538,7 @@ with tbs[2]:
     
 if st.session_state.user_role in ['admin', 'DM']:
     with tbs[3]:
-        # 🗺️ ADS Monitor
+        # 🗺️ ADS Monitor (이미지 스크린샷 비율 맞춤 정밀 크롭 세팅)
         ads_url = "https://adtc.swm.ai/adsmonitor/#/map"
         
         components.html(f"""
@@ -557,15 +557,17 @@ if st.session_state.user_role in ['admin', 'DM']:
                     </a>
                 </div>
             </div>
-            <div style="width: 100%; height: 720px; overflow: hidden; border-radius: 16px; border: 1px solid #1e293b; background-color: #0b132b; position: relative;">
+            
+            <!-- 좌측 메뉴바 및 하단 통계 완벽 제거 & 16:9 메인 지도 가득 채움 -->
+            <div style="width: 100%; height: 680px; overflow: hidden; border-radius: 16px; border: 1px solid #1e293b; background-color: #0b132b; position: relative;">
                 <iframe id="ads_frame" 
                         src="{ads_url}" 
-                        style="width: 108%; height: 1050px; border: none; position: absolute; top: -75px; left: -4%; transform: scale(1.02); transform-origin: top left;"
+                        style="width: 124%; height: 1120px; border: none; position: absolute; top: -110px; left: -228px; transform: scale(1.0); transform-origin: top left;"
                         allow="fullscreen; geolocation; accelerometer; gyroscope; magnetometer; VR; XR; webgl"
                         sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-pointer-lock">
                 </iframe>
             </div>
-        """, height=780)
+        """, height=740)
         
     with tbs[4]:
         am.draw_admin_tab(clean_df, f_drive, u_df, sched_df, m_cars, m_drivers, kst_now)
