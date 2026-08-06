@@ -538,17 +538,20 @@ with tbs[2]:
     
 if st.session_state.user_role in ['admin', 'DM']:
     with tbs[3]:
-        # 🗺️ ADS Monitor 웹페이지 직접 임베드
-        col_m1, col_m2 = st.columns([4, 1])
-        with col_m1:
-            st.markdown("### 🗺️ ADS Monitor")
-        with col_m2:
-            if st.button("🔄 화면 새로고침", key="btn_refresh_ads", use_container_width=True):
-                st.rerun()
-                
-        # 외부 ADS 모니터 웹사이트 바로 표시
+        # 🗺️ ADS Monitor 단독 새로고침 (Streamlit 전체 리로드 없이 웹페이지 iframe만 새로고침)
         ads_url = "https://adtc.swm.ai/adsmonitor/#/map"
-        components.iframe(ads_url, height=800, scrolling=True)
+        
+        components.html(f"""
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-family: sans-serif;">
+                <h3 style="margin: 0; color: #0f172a; font-size: 1.25rem;">🗺️ ADS Monitor</h3>
+                <button onclick="document.getElementById('ads_frame').src = '{ads_url}?t=' + new Date().getTime();" 
+                        style="background: #ffffff; color: #334155; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s;"
+                        onmouseover="this.style.background='#f1f5f9';" onmouseout="this.style.background='#ffffff';">
+                    🔄 모니터 웹 새로고침
+                </button>
+            </div>
+            <iframe id="ads_frame" src="{ads_url}" width="100%" height="800" style="border: 1px solid #e2e8f0; border-radius: 12px;"></iframe>
+        """, height=850)
         
     with tbs[4]:
         am.draw_admin_tab(clean_df, f_drive, u_df, sched_df, m_cars, m_drivers, kst_now)
