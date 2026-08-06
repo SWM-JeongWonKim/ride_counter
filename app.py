@@ -538,17 +538,17 @@ with tbs[2]:
     
 if st.session_state.user_role in ['admin', 'DM']:
     with tbs[3]:
-        # 🗺️ ADS Monitor 탭 내부구성
+        # 🗺️ ADS Monitor 웹페이지 직접 임베드
         col_m1, col_m2 = st.columns([4, 1])
         with col_m1:
             st.markdown("### 🗺️ ADS Monitor")
         with col_m2:
-            if st.button("🔄 데이터 새로고침", key="btn_refresh_ads", use_container_width=True):
-                st.cache_data.clear()
+            if st.button("🔄 화면 새로고침", key="btn_refresh_ads", use_container_width=True):
                 st.rerun()
                 
-        st.info("💡 ADS 모니터링 관련 현황 화면입니다.")
+        # 외부 ADS 모니터 웹사이트 바로 표시
+        ads_url = "https://adtc.swm.ai/adsmonitor/#/map"
+        components.iframe(ads_url, height=800, scrolling=True)
         
     with tbs[4]:
-        # 인자 개수 7개로 정확하게 맞춤 (오류 해결)
         am.draw_admin_tab(clean_df, f_drive, u_df, sched_df, m_cars, m_drivers, kst_now)
