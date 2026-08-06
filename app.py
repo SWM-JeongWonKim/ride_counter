@@ -538,20 +538,34 @@ with tbs[2]:
     
 if st.session_state.user_role in ['admin', 'DM']:
     with tbs[3]:
-        # 🗺️ ADS Monitor 단독 새로고침 (Streamlit 전체 리로드 없이 웹페이지 iframe만 새로고침)
+        # 🗺️ ADS Monitor (HD Map 차선 데이터 및 WebGL 렌더링 보안 권한 완전 개방)
         ads_url = "https://adtc.swm.ai/adsmonitor/#/map"
         
         components.html(f"""
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-family: sans-serif;">
                 <h3 style="margin: 0; color: #0f172a; font-size: 1.25rem;">🗺️ ADS Monitor</h3>
-                <button onclick="document.getElementById('ads_frame').src = '{ads_url}?t=' + new Date().getTime();" 
-                        style="background: #ffffff; color: #334155; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s;"
-                        onmouseover="this.style.background='#f1f5f9';" onmouseout="this.style.background='#ffffff';">
-                    🔄 모니터 웹 새로고침
-                </button>
+                <div>
+                    <button onclick="document.getElementById('ads_frame').src = '{ads_url}?t=' + new Date().getTime();" 
+                            style="background: #ffffff; color: #334155; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-right: 8px;"
+                            onmouseover="this.style.background='#f1f5f9';" onmouseout="this.style.background='#ffffff';">
+                        🔄 모니터 새로고침
+                    </button>
+                    <a href="{ads_url}" target="_blank" style="text-decoration: none;">
+                        <button style="background: #3b82f6; color: #ffffff; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                            ↗️ 전체화면으로 보기
+                        </button>
+                    </a>
+                </div>
             </div>
-            <iframe id="ads_frame" src="{ads_url}" width="100%" height="800" style="border: 1px solid #e2e8f0; border-radius: 12px;"></iframe>
-        """, height=850)
+            <iframe id="ads_frame" 
+                    src="{ads_url}" 
+                    width="100%" 
+                    height="820" 
+                    style="border: 1px solid #e2e8f0; border-radius: 12px;"
+                    allow="fullscreen; geolocation; accelerometer; gyroscope; magnetometer; VR; XR; webgl"
+                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-pointer-lock">
+            </iframe>
+        """, height=870)
         
     with tbs[4]:
         am.draw_admin_tab(clean_df, f_drive, u_df, sched_df, m_cars, m_drivers, kst_now)
