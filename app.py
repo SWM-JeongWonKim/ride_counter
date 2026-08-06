@@ -538,7 +538,7 @@ with tbs[2]:
     
 if st.session_state.user_role in ['admin', 'DM']:
     with tbs[3]:
-        # 🗺️ ADS Monitor (좌측 검은 메뉴 완전 숨김 & 상단 위치 위로 끌어올림 정밀 보정)
+        # 🗺️ ADS Monitor (지역 버튼 완성 + 오른쪽 여백 완벽 제거 세팅)
         ads_url = "https://adtc.swm.ai/adsmonitor/#/map"
         
         components.html(f"""
@@ -558,16 +558,16 @@ if st.session_state.user_role in ['admin', 'DM']:
                 </div>
             </div>
             
-            <!-- top: -128px (위로 끌어올림), left: -238px (오른쪽으로 당겨 좌측 메뉴 완전히 차단) -->
-            <div style="width: 100%; height: 530px; overflow: hidden; border-radius: 12px; border: 1px solid #1e293b; background-color: #0b132b; position: relative;">
+            <!-- top: -110px, left: -208px, width: 118% 정밀 핏 -->
+            <div style="width: 100%; height: 540px; overflow: hidden; border-radius: 12px; border: 1px solid #1e293b; background-color: #0b132b; position: relative;">
                 <iframe id="ads_frame" 
                         src="{ads_url}" 
-                        style="width: 125%; height: 950px; border: none; position: absolute; top: -128px; left: -238px;"
+                        style="width: 118%; height: 950px; border: none; position: absolute; top: -110px; left: -208px;"
                         allow="fullscreen; geolocation; accelerometer; gyroscope; magnetometer; VR; XR; webgl"
                         sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-pointer-lock">
                 </iframe>
             </div>
-        """, height=590)
+        """, height=600)
         
     with tbs[4]:
         am.draw_admin_tab(clean_df, f_drive, u_df, sched_df, m_cars, m_drivers, kst_now)
