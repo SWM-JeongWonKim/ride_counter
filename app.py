@@ -538,7 +538,7 @@ with tbs[2]:
     
 if st.session_state.user_role in ['admin', 'DM']:
     with tbs[3]:
-        # 🗺️ ADS Monitor (HD Map 차선 데이터 및 WebGL 렌더링 보안 권한 완전 개방)
+        # 🗺️ ADS Monitor (상단 지도 영역만 잘라내어 크롭 표시)
         ads_url = "https://adtc.swm.ai/adsmonitor/#/map"
         
         components.html(f"""
@@ -557,15 +557,16 @@ if st.session_state.user_role in ['admin', 'DM']:
                     </a>
                 </div>
             </div>
-            <iframe id="ads_frame" 
-                    src="{ads_url}" 
-                    width="100%" 
-                    height="820" 
-                    style="border: 1px solid #e2e8f0; border-radius: 12px;"
-                    allow="fullscreen; geolocation; accelerometer; gyroscope; magnetometer; VR; XR; webgl"
-                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-pointer-lock">
-            </iframe>
-        """, height=870)
+            <!-- 지도 영역만 가둬서 크롭하는 컨테이너 -->
+            <div style="width: 100%; height: 600px; overflow: hidden; border: 1px solid #e2e8f0; border-radius: 12px; position: relative;">
+                <iframe id="ads_frame" 
+                        src="{ads_url}" 
+                        style="width: 100%; height: 850px; border: none; position: absolute; top: 0; left: 0;"
+                        allow="fullscreen; geolocation; accelerometer; gyroscope; magnetometer; VR; XR; webgl"
+                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-pointer-lock">
+                </iframe>
+            </div>
+        """, height=670)
         
     with tbs[4]:
         am.draw_admin_tab(clean_df, f_drive, u_df, sched_df, m_cars, m_drivers, kst_now)
