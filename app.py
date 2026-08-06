@@ -537,37 +537,35 @@ with tbs[2]:
     tab_vehicle.draw_car_tab(clean_df, f_drive)
     
 if st.session_state.user_role in ['admin', 'DM']:
-        with tbs[3]:
-            # 🗺️ ADS Monitor (지도 화면 비율 맞춤 및 헤더/하단 완벽 크롭)
-            ads_url = "https://adtc.swm.ai/adsmonitor/#/map"
-            
-            components.html(f"""
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-family: sans-serif;">
-                    <h3 style="margin: 0; color: #0f172a; font-size: 1.25rem;">🗺️ ADS Monitor</h3>
-                    <div>
-                        <button onclick="document.getElementById('ads_frame').src = '{ads_url}?t=' + new Date().getTime();" 
-                                style="background: #ffffff; color: #334155; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-right: 8px;"
-                                onmouseover="this.style.background='#f1f5f9';" onmouseout="this.style.background='#ffffff';">
-                            🔄 모니터 새로고침
+    with tbs[3]:
+        # 🗺️ ADS Monitor
+        ads_url = "https://adtc.swm.ai/adsmonitor/#/map"
+        
+        components.html(f"""
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-family: sans-serif;">
+                <h3 style="margin: 0; color: #0f172a; font-size: 1.25rem;">🗺️ ADS Monitor</h3>
+                <div>
+                    <button onclick="document.getElementById('ads_frame').src = '{ads_url}?t=' + new Date().getTime();" 
+                            style="background: #ffffff; color: #334155; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-right: 8px;"
+                            onmouseover="this.style.background='#f1f5f9';" onmouseout="this.style.background='#ffffff';">
+                        🔄 모니터 새로고침
+                    </button>
+                    <a href="{ads_url}" target="_blank" style="text-decoration: none;">
+                        <button style="background: #3b82f6; color: #ffffff; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                            ↗️ 전체화면으로 보기
                         </button>
-                        <a href="{ads_url}" target="_blank" style="text-decoration: none;">
-                            <button style="background: #3b82f6; color: #ffffff; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer;">
-                                ↗️ 전체화면으로 보기
-                            </button>
-                        </a>
-                    </div>
+                    </a>
                 </div>
-                
-                <!-- 비율 맞춤 크롭 컨테이너 -->
-                <div style="width: 100%; height: 720px; overflow: hidden; border-radius: 16px; border: 1px solid #1e293b; background-color: #0b132b; position: relative;">
-                    <iframe id="ads_frame" 
-                            src="{ads_url}" 
-                            style="width: 108%; height: 1050px; border: none; position: absolute; top: -75px; left: -4%; transform: scale(1.02); transform-origin: top left;"
-                            allow="fullscreen; geolocation; accelerometer; gyroscope; magnetometer; VR; XR; webgl"
-                            sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-pointer-lock">
-                    </iframe>
-                </div>
-            """, height=780)
+            </div>
+            <div style="width: 100%; height: 720px; overflow: hidden; border-radius: 16px; border: 1px solid #1e293b; background-color: #0b132b; position: relative;">
+                <iframe id="ads_frame" 
+                        src="{ads_url}" 
+                        style="width: 108%; height: 1050px; border: none; position: absolute; top: -75px; left: -4%; transform: scale(1.02); transform-origin: top left;"
+                        allow="fullscreen; geolocation; accelerometer; gyroscope; magnetometer; VR; XR; webgl"
+                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-pointer-lock">
+                </iframe>
+            </div>
+        """, height=780)
         
     with tbs[4]:
         am.draw_admin_tab(clean_df, f_drive, u_df, sched_df, m_cars, m_drivers, kst_now)
