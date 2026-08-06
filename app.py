@@ -21,7 +21,6 @@ import admin_utils as utils
 import summary_modules.tab_summary as tab_summary
 import tab_safeguard
 import tab_vehicle
-import sheet_manager as sm
 
 st.set_page_config(layout="wide", page_title="운영 대시보드", page_icon="🚖")
 
@@ -164,22 +163,11 @@ if time.time() - global_state['last_sync_time'] > 60:
             pass
         global_state['last_sync_time'] = time.time()
 
-DEFAULT_SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQVR7r4MeKqxi3jtoEMIyPGueCAjVB-vZAzaFXTzM3ULIPO_wzKjYJAqr6SqJFYUXvibXb3luUWwF87/pubhtml"
-
 def get_dashboard_data():
     _, m = fm.get_master_data()
     
-    target_url = st.session_state.get('spreadsheet_url', DEFAULT_SHEET_URL)
-    leave_df = sm.load_sheet_data(target_url, "연차신청DB")
-    gsheets_sched_df = sm.parse_google_sheet_to_sched_df(target_url, leave_df, kst_now.year)
-    
-    fb_sched_df = pd.DataFrame(fm.get_schedules() if fm.get_schedules() else [])
-    if not gsheets_sched_df.empty and not fb_sched_df.empty:
-        merged_sched = pd.concat([fb_sched_df, gsheets_sched_df], ignore_index=True).drop_duplicates(subset=['date', 'name'], keep='last')
-    elif not gsheets_sched_df.empty:
-        merged_sched = gsheets_sched_df
-    else:
-        merged_sched = fb_sched_df
+    raw_schedules = fm.get_schedules() if fm.get_schedules() else []
+    merged_sched = pd.DataFrame(raw_schedules) if raw_schedules else pd.DataFrame(columns=['date', 'name', 'type'])
 
     st.session_state['sched_df'] = merged_sched
 
@@ -560,4 +548,4 @@ if st.session_state.user_role in ['admin', 'DM']:
         st.markdown("### 🗺️ ADS Monitor")
         st.info("💡 ADS 모니터링 관련 현황 화면입니다.")
     with tbs[4]:
-        am.draw_admin_tab(clean_df, f_drive, u_df, sched_df, m_cars, m_drivers, kst_now, DEFAULT_SHEET_URL)
+        am.draw_admin_tab(clean_df, f_drive, u_df, sched_df, m_cars, m_drivers, kst_now, "")
