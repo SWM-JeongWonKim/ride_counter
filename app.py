@@ -142,16 +142,9 @@ KST = datetime.timezone(datetime.timedelta(hours=9))
 kst_now = datetime.datetime.now(KST)
 
 # ---------------------------------------------------------
-# 상단 타이틀 및 새로고침 버튼 영역
+# 메인 대시보드 타이틀
 # ---------------------------------------------------------
-c_title, c_refresh = st.columns([4, 1])
-with c_title:
-    st.title("🚖 운영 대시보드")
-with c_refresh:
-    st.markdown("<div style='margin-top: 10px;'></div>", unsafe_allow_html=True)
-    if st.button("🔄 데이터 새로고침", use_container_width=True, type="secondary"):
-        st.cache_data.clear()
-        st.rerun()
+st.title("🚖 운영 대시보드")
 
 st.sidebar.success(f"👤 **{st.session_state.user_name}**님 ({st.session_state.user_position})\n\n🕒 {st.session_state.shift}\n\n📍 {st.session_state.region}")
 
@@ -545,7 +538,17 @@ with tbs[2]:
     
 if st.session_state.user_role in ['admin', 'DM']:
     with tbs[3]:
-        st.markdown("### 🗺️ ADS Monitor")
+        # 🗺️ ADS Monitor 탭 내부구성
+        col_m1, col_m2 = st.columns([4, 1])
+        with col_m1:
+            st.markdown("### 🗺️ ADS Monitor")
+        with col_m2:
+            if st.button("🔄 데이터 새로고침", key="btn_refresh_ads", use_container_width=True):
+                st.cache_data.clear()
+                st.rerun()
+                
         st.info("💡 ADS 모니터링 관련 현황 화면입니다.")
+        
     with tbs[4]:
+        # 인자 개수 7개로 정확하게 맞춤 (오류 해결)
         am.draw_admin_tab(clean_df, f_drive, u_df, sched_df, m_cars, m_drivers, kst_now)
